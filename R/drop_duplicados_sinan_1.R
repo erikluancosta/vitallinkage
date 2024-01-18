@@ -7,8 +7,6 @@
 #' Inicialmente ele verifica se existem registros exatamente iguais, se sim, aplica o drop deixando apenas um registro;
 #' Em seguida, as colunas NU_NOTIFIC e NM_PACIENT são concatenadas. Se houverem duplicadas nessas regras, um dos registros será deletado.
 #' @export
-#'
-#' @examples
 drop_duplicados_sinan_1 <- function(df){
 
   # Verifica se tem linhas duplicadas

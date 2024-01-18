@@ -2,18 +2,20 @@
 % Please edit documentation in R/padroniza_variaveis.R
 \name{padroniza_variaveis}
 \alias{padroniza_variaveis}
-\title{Padroniza as variáveis}
+\title{Padroniza os nomes das variáveis}
 \usage{
-padroniza_variaveis(df, nome_base)
+padroniza_variaveis(df, df2, nome_base)
 }
 \arguments{
 \item{df}{Nome do dataframe}
 
-\item{nome_base}{nome da base, exemplo: "SINAN", "SIM" ou "SIH"}
+\item{df2}{Nome da tabela com os nomes padronizados}
+
+\item{nome_base}{Nome da base a ser padronizada, ex: "SIM", "SINAN" ou "SIH"}
 }
 \value{
-Retora os nomes das variáveis padronizadas de acordo com a lista namestand
+Retorna o dataframe com as colunas padronizadas
 }
 \description{
-Padroniza as variáveis
+Padroniza os nomes das variáveis
 }

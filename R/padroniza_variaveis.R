@@ -1,24 +1,24 @@
-#' Padroniza as variáveis
+#' Padroniza os nomes das variáveis
 #'
 #' @param df Nome do dataframe
-#' @param nome_base nome da base, exemplo: "SINAN", "SIM" ou "SIH"
+#' @param df2 Nome da tabela com os nomes padronizados
+#' @param nome_base Nome da base a ser padronizada, ex: "SIM", "SINAN" ou "SIH"
 #'
-#' @return Retora os nomes das variáveis padronizadas de acordo com a lista namestand
-#'
-#' @examples
-padroniza_variaveis <- function(df, df2 = stanard_name,nome_base) {
-  df2<-vitallinkage::df2
+#' @return Retorna o dataframe com as colunas padronizadas
+#' @export
+padroniza_variaveis <- function(df, df2, nome_base) {
+
   # nomes das variáveis originais e padronizadas filtradas para o SINAN
-  names <- namestand |>
+  names <- df2 |>
     dplyr::filter(fonte == nome_base) |>
-    dplyr::select(var_names_orig, df2)
+    dplyr::select(var_names_orig, stanard_name)
 
   # Seleciona as variáveis do dataframe original
   df <- df |>
     dplyr::select(names$var_names_orig)
 
   # Renomeia as colunas do dataframe com os valores de stanard_name
-  names(df) <- names$df2
+  names(df) <- names$stanard_name
 
   return(df)
 }
