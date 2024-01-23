@@ -14,7 +14,8 @@ padroniza_variaveis(df, df2, nome_base)
 \item{nome_base}{Nome da base a ser padronizada, ex: "SIM", "SINAN" ou "SIH"}
 }
 \value{
-Retorna o dataframe com as colunas padronizadas
+Retorna o dataframe com os nomes das colunas padronizadas, a coluna com o nome do Banco de dados (banco)
+e uma coluna chamada "id_(nome do banco)". formada por: (nome do banco)\emph{(número de 1 a n)}(código identificador)
 }
 \description{
 Padroniza os nomes das variáveis

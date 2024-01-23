@@ -7,14 +7,11 @@
 #' @export
 criar_coluna_id <- function(df, nome_base) {
 
+  # aplicar case para cada tipo de "nu_not"
   coluna_id <- paste0("id_", nome_base)
   n <- nrow(df)
-  df[[coluna_id]] <- paste0(nome_base,'_', 1:n)
+  df[[coluna_id]] <- paste0(nome_base,'_', 1:n, '_', df$nu_not)
 
 
-  df <- df |>
-    dplyr::mutate(
-      banco = nome_base
-    )
   return(df)
 }
