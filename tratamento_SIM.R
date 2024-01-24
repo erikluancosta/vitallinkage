@@ -34,6 +34,7 @@ for (file in dbf_files) {
 sim<-sim_raw
 
 sim_2 <- sim |>
+  vitallinkage::ano_sim() |> # Adicionando o ano
   vitallinkage::as_char() |> # Transformando todos em character
   vitallinkage::variaveis_principais_sim() |> # Seleção das principais variáveis do SIM
   vitallinkage::limpa_ignorados_sim() |> # Remove textos de ignorado
@@ -48,8 +49,11 @@ sim_2 <- sim |>
   vitallinkage::padroniza_variaveis(namestand, "SIM") |> # Padronizando os nomes das variáveis
   vitallinkage::ds_raca_sim() |> # Ajustando a raça/cor
   vitallinkage::corrige_sg_sexo() |> # Ajustando a variável sg_sexo
-  vitallinkage::nu_idade_anos_sim() # Ajustanso a idade em anos
+  vitallinkage::nu_idade_anos_sim() |> # Ajustanso a idade em anos
+  vitallinkage::as_char() # Tudo como character
 
 # Anonimização
 sim_anon <- sim_2  |>
   vitallinkage::sim_anon()
+
+

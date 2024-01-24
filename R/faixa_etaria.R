@@ -8,12 +8,12 @@
 faixa_etaria <- function(df){
   df <- df |>
     dplyr::mutate(faixa_etaria=dplyr::case_when(
-      cd_idade<10~"0 a 9 anos",
-      cd_idade>09&cd_idade<20~"10 a 19 anos",
-      cd_idade>19&cd_idade<30~"20 a 29 anos",
-      cd_idade>29&cd_idade<60~"30 a 59 anos",
-      cd_idade>59~"60+",
-      T~as.character(cd_idade)
+      nu_idade_anos<10~"0 a 9 anos",
+      nu_idade_anos>09&nu_idade_anos<20~"10 a 19 anos",
+      nu_idade_anos>19&nu_idade_anos<30~"20 a 29 anos",
+      nu_idade_anos>29&nu_idade_anos<60~"30 a 59 anos",
+      nu_idade_anos>59~"60+",
+      T~as.character(nu_idade_anos)
     )
     )
 

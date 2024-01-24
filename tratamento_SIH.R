@@ -20,6 +20,7 @@ sih <- sih_final_csv
 
 sih_2 <- sih |>
   vitallinkage::padroniza_variaveis(namestand,'SIH') |> # Padroniza as variáveis
+  vitallinkage::ano_sih() |> #cria a coluna de ano
   vitallinkage::ds_raca_sih() |> # Cria coluna ds_raca
   vitallinkage::nu_idade_anos_sih() |> # Cria coluna de anos
   vitallinkage::faixa_etaria() |> # Cria coluna de faixa etária
@@ -29,3 +30,4 @@ sih_2 <- sih |>
 sih_anon <-
   sih_2 |>
   vitallinkage::sih_anon() # Anonimiza
+sih_anon |> vitaltable::tab_1(faixa_etaria)
