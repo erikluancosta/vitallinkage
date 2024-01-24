@@ -1,23 +1,20 @@
-#' Anonimiza o dataframe do SINAN
+#' Anonimiza o dataframe do SIM
 #'
 #' @param df Nome do data frame
 #'
 #' @return Retorna o dataframe sem as colunas com caracteres identificaveis
 #' @export
-sinan_anon <- function(df){
+sim_anon <- function(df){
 
-  sinan_anon <- df  |>
+  df <- df  |>
     dplyr::select(
       -ds_nome_pac,
       -ds_nome_mae,
-      -ds_nome_mae,
+      -ds_nome_pai,
       -nu_cns,
       -ds_rua_res,
       -nu_num_res,
-      -ds_bairro_res,
-      -nu_tel
+      -ds_bairro_res
       )
-
-  return(sinan_anon)
 
 }
