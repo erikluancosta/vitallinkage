@@ -35,11 +35,14 @@ sim<-sim_raw
 
 sim_2 <- sim |>
   vitallinkage::ano_sim() |> # Adicionando o ano
+  vitallinkage::ajuste_data(tipo_data = 1) |> # Ajustando o formato de data
   vitallinkage::as_char() |> # Transformando todos em character
   vitallinkage::variaveis_principais_sim() |> # Seleção das principais variáveis do SIM
   vitallinkage::limpa_ignorados_sim() |> # Remove textos de ignorado
-  vitallinkage::ajusta_encoding_sim() |> # Ajusta o encoding para UTF-8 ASCII
-  vitallinkage::tratamentos_txt_sim() |> # Ajustes nos textos das variaveis char
+  #vitallinkage::ajusta_encoding_sim() |> # Ajusta o encoding para UTF-8 ASCII
+  #vitallinkage::upper_case_char() |> # As colunas com texto passam a ficar com letra maiuscula
+  #vitallinkage::tratamentos_txt_sim() |> # Ajustes nos textos das variaveis char
+  vitallinkage::ajuste_txt() |>
   base::unique() |>  # Novos valores únicos após o tratamento
   vitallinkage::soundex_nome_sim() |>  # novas colunas: NOME1_SOUND, NOME2_SOUND, NOME3_SOUND
   vitallinkage::soundex_nomemae_sim() |> # novas colunas: NOMEMAE1_SOUND, NOMEMAE2_SOUND, NOMEMAE3_SOUND
@@ -57,3 +60,11 @@ sim_anon <- sim_2  |>
   vitallinkage::sim_anon()
 
 
+a <- sim[grepl("[0-9]", sim$NOME), ]
+b <- sim_2[grepl("[0-9]", sim_2$ds_nome_pac), ]
+
+
+vitallinkage::ajuste_data
+
+a <- sim_2 |> filter(ds_rua_res =='sitio santo antonio')
+b <- sim |> filter(ENDRES =='sitio santo antonio') |> upper_case_char()
