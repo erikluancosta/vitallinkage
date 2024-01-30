@@ -34,37 +34,43 @@ for (file in dbf_files) {
 sim<-sim_raw
 
 sim_2 <- sim |>
-  vitallinkage::ano_sim() |> # Adicionando o ano
-  vitallinkage::ajuste_data(tipo_data = 1) |> # Ajustando o formato de data
-  vitallinkage::as_char() |> # Transformando todos em character
-  vitallinkage::variaveis_principais_sim() |> # Seleção das principais variáveis do SIM
   vitallinkage::limpa_ignorados_sim() |> # Remove textos de ignorado
-  #vitallinkage::ajusta_encoding_sim() |> # Ajusta o encoding para UTF-8 ASCII
-  #vitallinkage::upper_case_char() |> # As colunas com texto passam a ficar com letra maiuscula
-  #vitallinkage::tratamentos_txt_sim() |> # Ajustes nos textos das variaveis char
-  vitallinkage::ajuste_txt() |>
-  base::unique() |>  # Novos valores únicos após o tratamento
-  vitallinkage::soundex_nome_sim() |>  # novas colunas: NOME1_SOUND, NOME2_SOUND, NOME3_SOUND
-  vitallinkage::soundex_nomemae_sim() |> # novas colunas: NOMEMAE1_SOUND, NOMEMAE2_SOUND, NOMEMAE3_SOUND
-  vitallinkage::soundex_nomepai_sim() |>  # novas colunas: NOMEPAI1_SOUND, NOMEPAI2_SOUND, NOMEPAI3_SOUND
-  vitallinkage::drop_duplicados_sim() |> # Aplicando métodos para dropar duplicados
-  vitallinkage::variaveis_principais_sim() |> # Seleção das principais variáveis do SIM
   vitallinkage::padroniza_variaveis(namestand, "SIM") |> # Padronizando os nomes das variáveis
+  vitallinkage::ajuste_data(tipo_data = 1) |> # Ajustando o formato de data
+  vitallinkage::ano_sim() |> # Adicionando o ano
+  vitallinkage::as_char() |> # Transformando todos em character
+  vitallinkage::ajuste_txt() |> # Ajusta as variáveis que contem "nome" na composição
+  vitallinkage::soundex_linkage("ds_nome_pac") |>
+  vitallinkage::soundex_linkage("ds_nome_pai") |>
+  vitallinkage::soundex_linkage("ds_nome_mae") |>
+  vitallinkage::ajuste_res() |> # Ajusta as variáveis que contem "_res" na composição
+  vitallinkage::soundex_linkage("ds_bairro_res") |>
+  vitallinkage::soundex_linkage("ds_rua_res") |>
+  vitallinkage::soundex_linkage("ds_comple_res") |>
+  vitallinkage::drop_duplicados_sim_padronizado() |> # Série de lógicas para remover duplicados
+  ## NOVAS VARIÁVEIS
   vitallinkage::ds_raca_sim() |> # Ajustando a raça/cor
   vitallinkage::corrige_sg_sexo() |> # Ajustando a variável sg_sexo
   vitallinkage::nu_idade_anos_sim() |> # Ajustanso a idade em anos
-  vitallinkage::as_char() # Tudo como character
+  vitallinkage::as_char()  # Tudo como character
 
 # Anonimização
 sim_anon <- sim_2  |>
   vitallinkage::sim_anon()
 
 
-a <- sim[grepl("[0-9]", sim$NOME), ]
-b <- sim_2[grepl("[0-9]", sim_2$ds_nome_pac), ]
+
+sim_3 <- sim_2 |> vitallinkage::ajuste_res()
+
+sim_a <- sim_2 |> dplyr::select(ds_bairro_res, ds_comple_res, ds_rua_res, cd_cep_res,nu_num_res, cd_mun_res, ds_comple_res)
+
+sim_b <- sim_3 |> dplyr::select(ds_bairro_res, ds_comple_res, ds_rua_res, cd_cep_res,nu_num_res, cd_mun_res, ds_comple_res)
+
+sim_3$ds_comple_res
+a <- sim_a[grepl("[^\\x00-\\x7F] ", sim_a$ds_bairro_res), ]
+b <- sim_b[grepl("[^\\x00-\\x7F]", sim_b$ds_bairro_res), ]
+
+usethis::use_data_raw("tratamento_SIM")
 
 
-vitallinkage::ajuste_data
-
-a <- sim_2 |> filter(ds_rua_res =='sitio santo antonio')
-b <- sim |> filter(ENDRES =='sitio santo antonio') |> upper_case_char()
+sim <- vitallinkage::padroniza_SIM(sim_raw)

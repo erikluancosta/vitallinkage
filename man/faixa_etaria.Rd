@@ -2,17 +2,23 @@
 % Please edit documentation in R/faixa_etaria.R
 \name{faixa_etaria}
 \alias{faixa_etaria}
-\title{Cria faixa etária}
+\title{Categoriza a idade em grupos específicos}
 \usage{
 faixa_etaria(df)
 }
 \arguments{
-\item{df}{nome do Data frame}
+\item{df}{Um data frame contendo a coluna 'nu_idade_anos' representando idades em anos.}
 }
 \value{
-Retorna uma coluna chamada faixa_etaria com as idades de
-10 a 19 anos, 20 a 29 anos, 30 a 59 anos e 60+
+O data frame de entrada com uma coluna adicional 'faixa_etaria' representando os grupos etários.
 }
 \description{
-Cria faixa etária
+Esta função categoriza a idade em grupos específicos.
+}
+\examples{
+\dontrun{
+df <- data.frame(nu_idade_anos = c(4, 15, 27, 35, 50, 65, 80))
+resultado <- faixa_etaria(df)
+}
+
 }

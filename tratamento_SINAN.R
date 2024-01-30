@@ -17,26 +17,33 @@ devtools::load_all(".")
 sinan <- read.dbf('C:/vitalstrategies/data_sicence/TCC/script_linkage/dados/SINAN/VIOLENET.DBF', as.is = TRUE)
 
 
+
 sinan_2 <- sinan
 
 # pipeline
-sinan_2 <- sinan_2 |>
-  #vitallinkage::upper_case_char() |> # As colunas com texto passam a ficar com letra maiuscula
+sinan_2 <- sinan |>
   vitallinkage::drop_duplicados_sinan_1() |>  # Dropa as colunas duplicadas inicialmente
   vitallinkage::padroniza_variaveis(namestand,"SINAN") |> # Padroniza variáveis baseado no df nomestand - ADICIONAR O CRIA COLUNA ID
+  vitallinkage::ajuste_data(tipo_data = 1) |> # Ajustando o formato de data
+  vitallinkage::nu_idade_anos_sinan() |> # ANO NASC SINAN
+  vitallinkage::as_char() |>  # Transformar todos em texto
   vitallinkage::ajuste_txt() |> # Ajusta os textos de nomes
+  vitallinkage::limpa_ignorados_sim() |> # Remove textos de ignorado
   vitallinkage::ds_raca_sinan() |> # Cria coluna descrevendo as raça no sinan
   vitallinkage::corrige_sg_sexo() |> # Corrige os registros de sexo Ignorado
   vitallinkage::nu_idade_anos_sinan() |> # Adiciona a coluna com a idade calculada
   vitallinkage::as_char() |>  # Transformar todos em texto
   vitallinkage::corrige_datas() |>  # Transforma em data as colunas que comecem com "dt_"
-  vitallinkage::ajuste_cd_to_int()
+  vitallinkage::ajuste_cd_to_int() |>
+
 
 # remove colunas com dados pessoais
 sinan_anon <- sinan |>
   vitallinkage::sinan_anon()
 
-a <- sinan[grepl("@", sinan$NM_PACIENT), ]
-b <- sinan_2[grepl("@", sinan_2$ds_nome_pac), ]
+a <- sinan[grepl("AAA", sinan$NM_PACIENT), ]
+b <- sinan_2[grepl("LIDIANE DOS SANTOS TERTULIANO", sinan_2$ds_nome_pac), ]
 
-
+f <- sinan_2 |> dplyr::filter(nu_not == 1869955)
+sinan_2$dt_nasc
+sinan$NU_ANO

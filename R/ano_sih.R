@@ -4,16 +4,11 @@
 #'
 #' @return Retorna uma coluna nova chamada ANO
 #' @export
-ano_sih <- function(df){
-
-
+ano_sih <- function(df) {
   df <- df |>
     dplyr::mutate(
-      ano=as.character(
-        data.table::year(
-          ymd(dt_internacao)
-        )
-      )
+      ano = as.character(data.table::year(ymd(dt_internacao))),
+      ano_nasc = as.character(data.table::year(ymd(dt_nasc)))
     )
-
+  return(df)
 }
