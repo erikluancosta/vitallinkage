@@ -4,10 +4,12 @@
 \alias{padroniza_SIM}
 \title{Tratamento da base SIM}
 \usage{
-padroniza_SIM(df, tipo_data = 1)
+padroniza_SIM(df, tipo_de_data = 1)
 }
 \arguments{
 \item{df}{Data frame com os dados do SIM}
+
+\item{tipo_de_data}{O formato de data que deve retornar}
 }
 \value{
 Base com os dados do SIM tratados

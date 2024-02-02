@@ -35,9 +35,9 @@ soundex_linkage <- function(df, col_name) {
     dplyr::relocate(c(col_name1, col_name2, col_name3), .after = col_name)
 
   # SOUNDEXBR
-  col_name1_sound <- paste0(col_name, "1_SOUND")
-  col_name2_sound <- paste0(col_name, "2_SOUND")
-  col_name3_sound <- paste0(col_name, "3_SOUND")
+  col_name1_sound <- paste0(col_name, "1_sound")
+  col_name2_sound <- paste0(col_name, "2_sound")
+  col_name3_sound <- paste0(col_name, "3_sound")
 
   df[[col_name1_sound]] <- SoundexBR::soundexBR(df[[col_name1]], BR = TRUE, useBytes = FALSE)
   df[[col_name2_sound]] <- SoundexBR::soundexBR(df[[col_name2]], BR = TRUE, useBytes = FALSE)
@@ -45,8 +45,8 @@ soundex_linkage <- function(df, col_name) {
 
   df <- df |>
     dplyr::relocate(c(col_name1_sound, col_name2_sound, col_name3_sound), .after = col_name3) |>
-    dplyr::mutate(!!paste0(col_name, "_SOUND") := paste0(get(col_name1_sound), get(col_name2_sound), get(col_name3_sound)),
-                  across(contains("_SOUND"), ~ ifelse(. == "NANANA", NA, .)))
+    dplyr::mutate(!!paste0(col_name, "_sound") := paste0(get(col_name1_sound), get(col_name2_sound), get(col_name3_sound)),
+                  across(contains("_sound"), ~ ifelse(. == "NANANA", NA, .)))
 
 
   return(df)

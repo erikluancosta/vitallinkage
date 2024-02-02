@@ -4,12 +4,12 @@
 \alias{padroniza_SIH}
 \title{Tratamento da base SIH}
 \usage{
-padroniza_SIH(df, tipo_data = 2)
+padroniza_SIH(df, tipo_de_data = 2)
 }
 \arguments{
 \item{df}{Data frame com os dados do SIH}
 
-\item{tipo_data}{O formato de data que deve retornar}
+\item{tipo_de_data}{O formato de data que deve retornar}
 }
 \value{
 Base com os dados do SIH tratados

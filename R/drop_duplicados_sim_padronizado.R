@@ -159,18 +159,18 @@ drop_duplicados_sim_padronizado <- function(df){
 
   regra_c2 <- df |>
     dplyr::group_by(
-      ds_nome_pac_SOUND,
+      ds_nome_pac_sound,
       dt_obito,
       dt_nasc) |>
     dplyr::summarise(n=n()) |>
     dplyr::filter(n>1,is.na(dt_nasc)==F) |>
-    dplyr::mutate(id=paste0( ds_nome_pac_SOUND,
+    dplyr::mutate(id=paste0( ds_nome_pac_sound,
                              dt_obito,
                              dt_nasc)) |>
     dplyr::ungroup()
 
   df <- df |>
-    dplyr::mutate(id=paste0( ds_nome_pac_SOUND,
+    dplyr::mutate(id=paste0( ds_nome_pac_sound,
                              dt_obito,
                              dt_nasc))
 
@@ -218,18 +218,18 @@ drop_duplicados_sim_padronizado <- function(df){
 
   regra_c3 <- df |>
     dplyr::group_by(
-      ds_nome_pac_SOUND,
+      ds_nome_pac_sound,
       ano,
       dt_nasc) |>
     dplyr::summarise(n=n()) |>
     dplyr::filter(n>1,is.na(dt_nasc)==F) |>
-    dplyr::mutate(id=paste0( ds_nome_pac_SOUND,
+    dplyr::mutate(id=paste0( ds_nome_pac_sound,
                              ano,
                              dt_nasc)) |>
     dplyr::ungroup()
 
   df <- df |>
-    dplyr::mutate(id=paste0( ds_nome_pac_SOUND,
+    dplyr::mutate(id=paste0( ds_nome_pac_sound,
                              ano,
                              dt_nasc))
 
@@ -275,20 +275,20 @@ drop_duplicados_sim_padronizado <- function(df){
     dplyr::mutate(causa_3d=substr(cd_causabas,1,3))
 
   regra_c3 <- df |>
-    dplyr::group_by(    ds_nome_mae_SOUND,
+    dplyr::group_by(    ds_nome_mae_sound,
                         dt_nasc,
                         dt_obito,
                         causa_3d) |>
     dplyr::summarise(n=n()) |>
     dplyr::filter(n>1,is.na(dt_nasc)==F) |>
-    dplyr::mutate(id=paste0( ds_nome_mae_SOUND,
+    dplyr::mutate(id=paste0( ds_nome_mae_sound,
                              dt_nasc,
                              dt_obito,
                              causa_3d)) |>
     dplyr::ungroup()
 
   df <- df |>
-    dplyr::mutate(id=paste0( ds_nome_mae_SOUND,
+    dplyr::mutate(id=paste0( ds_nome_mae_sound,
                              dt_nasc,
                              dt_obito,
                              causa_3d))
@@ -336,20 +336,20 @@ drop_duplicados_sim_padronizado <- function(df){
 
   regra_c3 <- df |>
     dplyr::group_by(
-      ds_nome_pai_SOUND,
+      ds_nome_pai_sound,
       dt_nasc,
       dt_obito,
       causa_3d) |>
     dplyr::summarise(n=n()) |>
     dplyr::filter(n>1,is.na(dt_nasc)==F) |>
-    dplyr::mutate(id=paste0( ds_nome_pai_SOUND,
+    dplyr::mutate(id=paste0( ds_nome_pai_sound,
                              dt_nasc,
                              dt_obito,
                              causa_3d)) |>
     dplyr::ungroup()
 
   df <- df |>
-    dplyr::mutate(id=paste0( ds_nome_pai_SOUND,
+    dplyr::mutate(id=paste0( ds_nome_pai_sound,
                              dt_nasc,
                              dt_obito,
                              causa_3d))

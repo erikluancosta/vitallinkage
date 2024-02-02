@@ -12,6 +12,7 @@ library(lubridate)
 library(writexl)
 devtools::load_all(".")
 
+
 # Specify the file path
 path <- 'C:/vitalstrategies/data_sicence/TCC/SCRIPTS_LINKAGE/Erik/SIM'
 
@@ -68,7 +69,7 @@ sim_b <- sim_3 |> dplyr::select(ds_bairro_res, ds_comple_res, ds_rua_res, cd_cep
 
 sim_3$ds_comple_res
 a <- sim_a[grepl("[^\\x00-\\x7F] ", sim_a$ds_bairro_res), ]
-b <- sim_b[grepl("[^\\x00-\\x7F]", sim_b$ds_bairro_res), ]
+b <- sim_b[grepl("[^\\x00-\\x7F]", sim_b$ds_bairro_res), ]+
 
 usethis::use_data_raw("tratamento_SIM")
 

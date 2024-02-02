@@ -7,6 +7,6 @@
 nu_idade_anos_sih <- function(df){
 
   df <- df |>
-    dplyr::mutate(nu_idade_anos=cd_idade)
+    dplyr::mutate(nu_idade_anos = as.integer(cd_idade))
 
 }
