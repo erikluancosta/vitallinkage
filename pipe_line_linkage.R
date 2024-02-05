@@ -40,7 +40,9 @@ for (file in dbf_files) {
 
 sim <- vitallinkage::padroniza_SIM(sim_raw)
 rm(sim_raw)
-sim$ds_nome_pac
+
+
+
 ########
 ### SIH
 ########
@@ -51,6 +53,9 @@ sih <- vitallinkage::padroniza_SIH(sih_final_csv)
 rm(sih_final_csv)
 #sih_2 <- sih |> select(ds_nome_pac, nome_original, ds_nome_mae, nome_mae_original)
 
+
+
+
 ##########
 ### SINAN
 ##########
@@ -58,6 +63,8 @@ rm(sih_final_csv)
 sinan <- read.dbf('C:/vitalstrategies/data_sicence/TCC/script_linkage/dados/SINAN/VIOLENET.DBF', as.is = TRUE)
 
 sinan <- vitallinkage::padroniza_SINAN(sinan)
+
+
 
 #################
 ### CONCATENANDO
@@ -103,7 +110,7 @@ concat_2 |> select(nu_doc)
 
 # regra númeo 1 - data de nascimento e cpf igual. Usar nu_cns
 # TENTATIVA DA PRIMEIRA REGRA
-
+gc()
 dados <- concat_2 |>
   arrange(ds_nome_pac, dt_nasc) |>
   group_by(ds_nome_pac, dt_nasc) |>
@@ -118,6 +125,8 @@ dados <- concat_2 |>
   select(par_1, id_SIH, id_SIM, id_SINAN) |>
   right_join(concat_2, by = c('id_SIH', 'id_SIM', 'id_SINAN'))
 
+# olhar o gc()
+gc()
 table(regra_2$par_2)
 
 
