@@ -12,5 +12,5 @@ utils::globalVariables(c(
  'NOMEPAI3_SOUND', 'NOME_SOUND', 'ANO_NASC', 'NOMEMAE_SOUND', 'NOMEPAI_SOUND', 'causa_3d', 'id', 'ds_nome_pai',
  ':=', 'across', 'ano', 'ano_nasc', 'contains', 'ds_nome_mae_SOUND', 'ds_nome_pac_SOUND',
  'ds_nome_pai_SOUND', 'dt_nasc', 'dt_obito', 'nu_do', 'cd_causabas', 'ds_nome_mae_sound', 'ds_nome_pac_sound', 'ds_nome_pai_sound',
- 'par_2', 'N', 'N_p', 'par_1'
+ 'par_2', 'N', 'N_p', 'par_1',  'N_par', 'par_final', 'par_final_final', 'par_temp'
 ))

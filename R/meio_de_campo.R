@@ -9,20 +9,53 @@
 #' @export
 meio_de_campo <- function(df) {
 
-  df <- df |>
-    dplyr::group_by(par_2) |>
-    mutate(N = n()) |>
-    dplyr::mutate(par_2 = ifelse(N == 1, NA, par_2)) |>
-    dplyr::mutate(par_2 = ifelse(N != 0, par_2 + ifelse(all(is.na(par_1)), 0, max(par_1, na.rm=T)), par_2)) |>
-    dplyr::select(-N) |>
-    dplyr::mutate(par_1 = ifelse(!is.na(par_2) & is.na(par_1), par_2, par_1)) |>
-    dplyr::mutate(par_1 = ifelse(!is.na(par_1), par_1, ifelse(!is.na(par_2) & is.na(par_1), par_2, par_1))) |>
-    dplyr::arrange(par_1) |>
-    dplyr::group_by(par_1) |>
-    dplyr::mutate(N_p = n()) |>
-    dplyr::mutate(par_1 = ifelse(N_p == 1, NA, par_1)) |>
-    dplyr::ungroup()
+  par_list <- df |>
+    dplyr::distinct(par_1, par_2) |>
+    dplyr::filter(!is.na(par_1), !is.na(par_2)) |>
+    dplyr::rename('par_temp' = par_1)
 
+  par_list <- par_list |>
+    dplyr::mutate(
+      N_par = ifelse((par_temp == dplyr::lag(par_temp)) | (par_2 == dplyr::lead(par_2)), n(), NA)
+      )
+
+  par_list <- par_list |>
+    dplyr::arrange(par_2) |>
+    dplyr::group_by(par_2) |>
+    dplyr::mutate(
+      par_final = ifelse(
+        (par_2 == dplyr::lead(par_2) | (par_temp == dplyr::lead(par_temp))) | (par_2 == dplyr::lag(par_2) | (par_temp == dplyr::lag(par_temp) & N_par>1)),
+        dplyr::lead(par_temp),
+        par_2
+      ),
+      par_final = ifelse(
+        is.na(par_final),  # Se o valor de par_final for NA
+        ifelse(
+          !is.na(par_final) & par_final == dplyr::lead(par_temp),  # E se par_temp for igual ao valor anterior ou posterior de par_temp
+          par_temp,  # Preenche com par_temp
+          par_final  # Caso contrário, mantém o valor de par_2
+        ),
+        par_final  # Se par_final já tiver um valor, mantém esse valo
+      )
+    )
+
+  par_list <- par_list |>
+    dplyr::mutate(
+      par_final_final = dplyr::coalesce(par_final, par_temp, par_2)
+    ) |>
+    dplyr::distinct(par_final_final, par_2)
+
+
+  nova_linha <- data.frame(matrix(NA, ncol = ncol(par_list), nrow = 1))
+  # Atribuir nomes de coluna à nova linha, se necessário
+  colnames(nova_linha) <- colnames(par_list)
+  # Adicionar a nova linha ao final do dataframe existente
+  par_list <- rbind(par_list, nova_linha)
+
+  df <- dplyr::left_join(df, par_list, by = "par_2") |>
+    dplyr::mutate(par_final = dplyr::coalesce(par_final_final, par_1, par_2)) |>
+    dplyr::select(-par_1) |>
+    dplyr::rename("par_1" = par_final_final)
 
   return(df)
 }
