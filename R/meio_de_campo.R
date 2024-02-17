@@ -20,9 +20,12 @@ meio_de_campo <- function(df) {
     dplyr::distinct(par_2, par_final_temp)
 
   df <- dplyr::left_join(df, par_list, by = "par_2") |>
-    dplyr::mutate(par_final = dplyr::coalesce(par_final_temp, par_1, par_2))# |>
+    dplyr::mutate(par_final = dplyr::coalesce(par_final_temp, par_1, par_2)) |>
+    group_by(par_1) |>
+    mutate(par_final = ifelse(all(is.na(par_1)), NA, max(par_final, na.rm = TRUE)))# |>
     # dplyr::select(-par_1) |>
     # dplyr::rename("par_1" = par_final)
 
   return(df)
+
 }
