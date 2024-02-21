@@ -23,10 +23,12 @@ meio_de_campo <- function(df) {
     dplyr::mutate(par_final = dplyr::coalesce(par_final_temp, par_1, par_2)) |>
     dplyr::group_by(par_1) |>
     dplyr::mutate(par_final_final = ifelse(all(is.na(par_1)), NA, max(par_final, na.rm = TRUE)),
-          par_final = dplyr::coalesce(par_final_final, par_final)) |>
+           par_final = dplyr::coalesce(par_final_final, par_final)) |>
     dplyr::ungroup() |>
-    dplyr::select(-par_1, -par_2, -par_final_temp, -par_final_final)  |>
-    dplyr::rename('par_1' = par_final) 
+    dplyr::select(-par_1, -par_2, -par_final_temp, -par_final_final) |>
+    dplyr::rename("par_1" = par_final)
+
+
 
   return(df)
 
