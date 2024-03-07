@@ -20,6 +20,7 @@ padroniza_SINAN <- function(df, tipo_de_data = 2){
     vitallinkage::as_char() |>  # Transformar todos em texto
     vitallinkage::copia_nomes() |>
     vitallinkage::ajuste_txt() |> # Ajusta os textos de nomes
+    vitallinkage::gemelar("ds_nome_pac") |>
     vitallinkage::limpa_ignorados_sim() |> # Remove textos de ignorado
     vitallinkage::soundex_linkage("ds_nome_pac") |>
     vitallinkage::soundex_linkage("ds_nome_mae") |>

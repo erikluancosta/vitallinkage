@@ -45,7 +45,7 @@ ajuste_txt <- function(df){
 
         # Ajustes específicos para colunas contendo "nome" ou "NOME"
         df[[coluna]] <- stringr::str_squish(df[[coluna]])
-        df[[coluna]] <- gsub("^RN |RECEM NASCIDO |RN NASCIDO |NATIMORTO|NATIMORTI |FETO MORTO|FETO|MORTO|NASCIDO VIVO|VIVO|NASCIDO|NAO IDENTIFICADO|SEM DOC|CADAVER|NATIMORTE|RECEM|IGNORADO|RECEM NASCIDO DE | GEMELAR|GEMELAR| GEMELAR I|GEMELAR I| GEMELAR II|GEMELAR II|I GEMELAR|II GEMELAR", "", df[[coluna]])
+        df[[coluna]] <- gsub("^RN |RECEM NASCIDO |RN NASCIDO |NATIMORTO|NATIMORTI |FETO MORTO|FETO|MORTO|NASCIDO VIVO|VIVO|NASCIDO|NAO IDENTIFICADO|SEM DOC|CADAVER|NATIMORTE|RECEM|IGNORADO|RECEM NASCIDO DE ", "", df[[coluna]])
         df[[coluna]] <- gsub(" FILHO| NETO| SOBRINHO| JUNIOR", "", df[[coluna]])
         df[[coluna]] <- gsub(" DE | DOS | DA | DOS | DAS | DO | DDAS | E ", " ", df[[coluna]])
         # Remove caracteres não alfabéticos

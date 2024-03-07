@@ -11,7 +11,6 @@ dados <- data.frame(
   banco = c('SIM', "SIH", "SINAN", 'SIH', 'SIH','SIH', 'SINAN','SIH', 'SINAN', 'SIM')
 )
 
-dados_b <- dados |> arrange(nome, data_nasc)
 
 # Criando colunas de soundex com a função soundex_linkage
 dados_2 <- dados |> vitallinkage::soundex_linkage('nome') |>

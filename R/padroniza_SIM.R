@@ -15,6 +15,7 @@ padroniza_SIM <- function(df, tipo_de_data = 1){
     vitallinkage::as_char() |> # Transformando todos em character
     vitallinkage::copia_nomes() |>
     vitallinkage::ajuste_txt() |> # Ajusta as variáveis que contem "nome" na composição
+    vitallinkage::gemelar("ds_nome_pac") |> # Cria coluna de gemelar
     vitallinkage::soundex_linkage("ds_nome_pac") |>
     vitallinkage::soundex_linkage("ds_nome_pai") |>
     vitallinkage::soundex_linkage("ds_nome_mae") |>

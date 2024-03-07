@@ -41,6 +41,7 @@ sim_2 <- sim |>
   vitallinkage::ano_sim() |> # Adicionando o ano
   vitallinkage::as_char() |> # Transformando todos em character
   vitallinkage::ajuste_txt() |> # Ajusta as variáveis que contem "nome" na composição
+  vitallinkage::gemelar("ds_nome_pac") |>
   vitallinkage::soundex_linkage("ds_nome_pac") |>
   vitallinkage::soundex_linkage("ds_nome_pai") |>
   vitallinkage::soundex_linkage("ds_nome_mae") |>
@@ -59,7 +60,7 @@ sim_2 <- sim |>
 sim_anon <- sim_2  |>
   vitallinkage::sim_anon()
 
-
+a <- sim_2 |> filter(gemelar==1)
 
 sim_3 <- sim_2 |> vitallinkage::ajuste_res()
 

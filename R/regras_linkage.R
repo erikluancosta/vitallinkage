@@ -37,7 +37,7 @@ regras_linkage <- function(df, variables, chave, num_regra) {
   # Cria o código completo, incluindo as mutações específicas para a segunda condição
   code <- paste(df_name, "|>", arrange_str, "|>", group_by_str, "|>", mutate_N_par_str,
                 "|> mutate(regra",num_regra, "= ifelse(!is.na(N_par) & N_par > 1, 1, NA))",
-                "|> mutate(par_2 = ifelse(!is.na(N_par) & N_par > 1, 1 + cur_group_id(), NA), par_c",num_regra," = par_2)",
+                "|> mutate(par_2 = ifelse(!is.na(N_par) & N_par > 1, (max(df$par_1, na.rm=TRUE) + cur_group_id()), NA), par_c",num_regra," = par_2)",
                 "|> ungroup()",
                 "|> vitallinkage::meio_de_campo()", sep = "")
 

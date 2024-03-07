@@ -71,6 +71,9 @@ df <- df |>
  #  select(-N_par) #|>
   # vitallinkage::meio_de_campo()
 
+
+
+
 par_3_t <- df |>  meio_de_campo()
 
 

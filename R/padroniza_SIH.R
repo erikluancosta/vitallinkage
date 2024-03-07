@@ -15,6 +15,7 @@ padroniza_SIH <- function(df, tipo_de_data =2){
     vitallinkage::as_char() |> # Transformando todos em character
     vitallinkage::copia_nomes() |> # clona colunas de nome
     vitallinkage::ajuste_txt() |> # Ajusta os textos de nomes
+    vitallinkage::gemelar("ds_nome_pac") |>
     #base::unique() |> # Novos valores únicos após o tratamento
     vitallinkage::soundex_linkage("ds_nome_pac") |>
     vitallinkage::soundex_linkage("ds_nome_mae") |>
