@@ -20,18 +20,19 @@ colunas_par_c <- grep("^par_c6", names(df_t), value = TRUE)
 
 # Dataframe com colunas selecionadas para acompanhamento
 acompanhamento <- df_t |>  select(
-  par_1, all_of(colunas_par_c),
+  par_1, par_c64,
+  #all_of(colunas_par_c),
   ds_nome_pac, dt_nasc, ds_nome_mae,
   nu_cpf, nu_cns, cd_mun_not ,banco
 )
 
 # Casos novos identificados na regra
-novos <- vitallinkage::casos_novos(df_t, par_c61)
+novos <- vitallinkage::casos_novos(df_t, par_c64)
 
 
 # Registros identificados na regra que já foram identificados antes
 complementares <-
-  vitallinkage::filtro_par_c_especifico(df_t, 'par_c61') |>
+  vitallinkage::filtro_par_c_especifico(df_t, 'par_c64') |>
   select(
     par_1, all_of(colunas_par_c),
     ds_nome_pac, dt_nasc, dt_obito, ds_nome_mae,

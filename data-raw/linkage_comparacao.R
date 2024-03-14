@@ -29,7 +29,8 @@ dados_linkage <- concat |>
     nu_cpf = ifelse(str_detect(nu_cpf, "^[0-9.]+$"), as.numeric(nu_cpf), NA),
     ignora_maria = ifelse(ds_nome_mae1 == 'MARIA', NA, 1),
     ignora_francisca = ifelse(ds_nome_mae1 == 'FRANCISCA', NA, 1),
-    ignora_josefa = ifelse(ds_nome_mae1 == 'JOSEFA', NA, 1)
+    ignora_josefa = ifelse(ds_nome_mae1 == 'JOSEFA', NA, 1),
+    morreu = ifelse(!is.na(dt_obito), 1, NA)
 
     )
 
@@ -259,12 +260,12 @@ df_2 <- df_2 |>
     27
   )
 
+rn_linkada_teste <- df_2
 
 ## CHECKPOINT
-# save(rn_linkada_teste, file = 'C:/vitalstrategies/data_sicence/TCC/script_linkage/dados/rn_linkada.RData')
+#save(rn_linkada_teste, file = 'C:/vitalstrategies/data_sicence/TCC/script_linkage/dados/rn_linkada.RData')
 
 load('C:/vitalstrategies/data_sicence/TCC/script_linkage/dados/rn_linkada.RData')
-
 
 df_2 <- rn_linkada_teste |>
   mutate(
@@ -346,7 +347,6 @@ df_2 <- df_2 |>
     35
   )
 
-
 ## CHECKPOINT 2
 #rn_linkada_teste <- df_2
 #save(rn_linkada_teste, file = 'C:/vitalstrategies/data_sicence/TCC/script_linkage/dados/rn_linkada.RData')
@@ -427,7 +427,7 @@ df_2 <- df_2 |>
   )
 
 ## CHECK POINT 3
-#save(df_2, file = 'C:/vitalstrategies/data_sicence/TCC/script_linkage/dados/rn_linkada_41.RData')
+save(df_2, file = 'C:/vitalstrategies/data_sicence/TCC/script_linkage/dados/rn_linkada_41.RData')
 load('C:/vitalstrategies/data_sicence/TCC/script_linkage/dados/rn_linkada_41.RData')
 
 
@@ -487,7 +487,7 @@ df_2 <- df_2 |>
   )
 
 # Regra 48
-df_t <- df_2 |>
+df_2 <- df_2 |>
   vitallinkage::regras_linkage(
     c('nu_cns','ds_nome_pac1_sound', 'ds_nome_pac2_sound','dia_nasc', 'mes_nasc', 'faixa_etaria', 'ignora_maria', 'mae_11'),
     c('nu_cns'),
@@ -595,15 +595,57 @@ df_2 <- df_2 |>
     60
   )
 
+save(df_2, file = 'C:/vitalstrategies/data_sicence/TCC/script_linkage/dados/rn_linkada_60.RData')
+
+
+df_2 <- df_2 |> mutate(
+  ignora_maria_pac=ifelse(ds_nome_pac1 == 'MARIA', NA, 1)
+)
 # Regra 61 - stata inspirado no 56
-df_t <- df_2 |>
+df_2 <- df_2 |>
   vitallinkage::regras_linkage(
     c('ds_nome_pac_sound','mae_menos5d', 'dt_nasc', 'ds_rua_res_sound', 'faixa_etaria'),
     c('ds_nome_mae1_sound', 'ds_nome_pac1_sound'),
     61
   )
 
-df_t$mae
+# Regra 62 - stata inspirado no 57
+df_2 <- df_2 |>
+  vitallinkage::regras_linkage(
+    c('ds_nome_pac2_sound', 'nome_pac_6','faixa_etaria', 'ano_nasc', 'cd_mun_not', 'sg_sexo', 'ds_nome_mae2', 'ignora_maria'),
+    c('ds_nome_pac1_sound'),
+    62
+  )
+
+# Regra 63 - stata inspirado no 58
+df_2 <- df_2 |>
+  vitallinkage::regras_linkage(
+    c('ds_nome_pac2_sound', 'nome_pac_6','faixa_etaria', 'mes_nasc', 'cd_mun_not', 'sg_sexo', 'ds_nome_mae2', 'ignora_maria'),
+    c('ds_nome_pac1_sound'),
+    63
+  )
+
+# Regra 64 - stata inspirado no 58
+df_2 <- df_2 |>
+  vitallinkage::regras_linkage(
+    c('ds_nome_pac2_sound', 'ds_nome_mae1','nome_pac_6','faixa_etaria', 'dia_nasc', 'cd_mun_not', 'sg_sexo', 'ds_nome_mae2', 'ignora_maria'),
+    c('ds_nome_pac1_sound'),
+    64
+  )
+
+
+# Regra 65 - stata inspirado no 58
+df_2 <- df_2 |>
+  vitallinkage::regras_linkage(
+    c('ds_nome_pac2_sound', 'ds_nome_mae1','nome_pac_6','faixa_etaria', 'dia_nasc', 'cd_mun_not', 'sg_sexo', 'ds_nome_mae2', 'ignora_maria'),
+    c('ds_nome_pac1_sound'),
+    65
+  )
+
+save(df_2, file = 'C:/vitalstrategies/data_sicence/TCC/script_linkage/dados/rn_linkada_65.RData')
+
+
+
 
 gc()
 
@@ -622,10 +664,17 @@ df_2 <- df_t
 df_t$nome_menos_5d
 
 a <- df_2 |> filter(ds_nome_pac == 'RN') |>
-  select(par_1, ds_nome_pac, ds_nome_pac1, ds_nome_pac2, ds_nome_pac3, ds_nome_pac1_sound,
-         ds_nome_pac2_sound, ds_nome_pac3_sound, dt_nasc, ds_nome_mae, ds_nome_mae1, ds_nome_mae2, ds_nome_mae3, nu_tel)
+  select(
+    par_1, ds_nome_pac, ds_nome_pac1, ds_nome_pac2,
+    ds_nome_pac3, ds_nome_pac1_sound,
+    ds_nome_pac2_sound, ds_nome_pac3_sound,
+    dt_nasc, ds_nome_mae, ds_nome_mae1,
+    ds_nome_mae2, ds_nome_mae3, nu_tel
+  )
 
 
 b <- df_2 |> filter(par_1 %in% c(6859791)) |>
   select(par_1, ds_nome_pac, ds_nome_pac1, ds_nome_pac2, ds_nome_pac3, ds_nome_pac1_sound, ds_nome_pac2_sound, ds_nome_pac3_sound, dt_nasc, ds_nome_mae, ds_nome_mae1, ds_nome_mae2, ds_nome_mae3, nu_tel)
 
+
+source('http://cemin.wikidot.com/local--files/raisr')
