@@ -16,30 +16,30 @@ options(scipen = 999)
 
 ## ACOMPANHAMENTO DAS REGRAS
 # Cria lista de colunas que começam com "par_c"
-colunas_par_c <- grep("^par_c6", names(df_t), value = TRUE)
+colunas_par_c <- grep("^par_c9", names(df_2), value = TRUE)
 
 # Dataframe com colunas selecionadas para acompanhamento
-acompanhamento <- df_t |>  select(
-  par_1, par_c64,
-  #all_of(colunas_par_c),
+acompanhamento <- df_2 |>  select(
+  par_1,
+  all_of(colunas_par_c),
   ds_nome_pac, dt_nasc, ds_nome_mae,
   nu_cpf, nu_cns, cd_mun_not ,banco
 )
 
 # Casos novos identificados na regra
-novos <- vitallinkage::casos_novos(df_t, par_c64)
+novos <- vitallinkage::casos_novos(df_2, par_c93)
 
 
 # Registros identificados na regra que já foram identificados antes
 complementares <-
-  vitallinkage::filtro_par_c_especifico(df_t, 'par_c64') |>
+  vitallinkage::filtro_par_c_especifico(df_2, 'par_c93') |>
   select(
     par_1, all_of(colunas_par_c),
     ds_nome_pac, dt_nasc, dt_obito, ds_nome_mae,
-    nu_cpf, nu_cns, cd_mun_not ,banco
+    nu_cpf, nu_cns, nu_doc,nu_doc_copia, cd_mun_not ,banco
   )
 
-
+gc()
 
 
 ## ACOMPANHAMENTO DE DUPLICADOS NO SIM
@@ -60,13 +60,39 @@ muitos_registros <- df_2 |>
   filter(!is.na(par_1)) |>
   group_by(par_1) |>
   summarise(contagem = n()) |>
-  filter(contagem > 20) |>
+  filter(contagem > 19) |>
   arrange(-contagem)
 
 
 # df com os maiores de par_1
 mais_frequentes <- df_2 |>
   filter(par_1%in%muitos_registros$par_1) |>
+  group_by(par_1) |>
   select(par_1, banco, ds_nome_pac, dt_nasc, dt_obito,
-         ds_nome_mae, nu_cns, nu_doc,nu_do, nu_tel, cd_causabas, ds_rua_res, cd_atestante)
+         ds_nome_mae, nu_cns, nu_doc,nu_do, nu_tel, cd_causabas, ds_rua_res, cd_atestante) |>
+  mutate(freq = n()) |>
+  ungroup()
 
+
+especifico <- df_2 |>
+  filter(par_1%in%c(3083555,541115,
+                    202741,
+                    109073,
+                    315,
+                    71865,
+                    72330,
+                    165616,
+                    186864,
+                    6521,
+                    8628646,
+                    15424046,
+                    38078 )) |>
+  group_by(par_1) |>
+  select(par_1, banco, ds_nome_pac, dt_nasc, dt_obito,
+         ds_nome_mae, nu_cns, nu_doc,nu_do, nu_tel, cd_causabas, ds_rua_res, cd_atestante) |>
+  mutate(freq = n()) |>
+  ungroup()
+
+a <- df_2 |> distinct(par_1, banco)
+
+tab_1(a,banco)

@@ -74,5 +74,3 @@ b <- sim_b[grepl("[^\\x00-\\x7F]", sim_b$ds_bairro_res), ]+
 
 usethis::use_data_raw("tratamento_SIM")
 
-
-sim <- vitallinkage::padroniza_SIM(sim_raw)

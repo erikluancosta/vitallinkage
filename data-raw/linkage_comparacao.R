@@ -633,32 +633,356 @@ df_2 <- df_2 |>
     64
   )
 
-
-# Regra 65 - stata inspirado no 58
+# Regra 65 - stata inspirado no 59
 df_2 <- df_2 |>
   vitallinkage::regras_linkage(
-    c('ds_nome_pac2_sound', 'ds_nome_mae1','nome_pac_6','faixa_etaria', 'dia_nasc', 'cd_mun_not', 'sg_sexo', 'ds_nome_mae2', 'ignora_maria'),
-    c('ds_nome_pac1_sound'),
+    c('dt_nasc', 'cd_mun_not', 'sg_sexo', 'nome_menos_5d','ds_nome_pac2'),
+    c('ds_nome_mae1', 'ds_nome_mae2'),
     65
   )
 
-save(df_2, file = 'C:/vitalstrategies/data_sicence/TCC/script_linkage/dados/rn_linkada_65.RData')
 
 
+#save(df_2, file = 'C:/vitalstrategies/data_sicence/TCC/script_linkage/dados/rn_linkada_65.RData')
 
+load('C:/vitalstrategies/data_sicence/TCC/script_linkage/dados/rn_linkada_65.RData')
 
-gc()
-
-a <- df_2 |>
-  select(
-    ds_nome_pac, ds_nome_pac_sound, dt_nasc, ds_nome_mae, ds_nome_mae_sound,
-    ds_rua_res, ds_rua_res_sound,
-    cd_mun_res, cd_mun_not
+df_2<- df_2 |>
+  mutate(
+    nome_meio_4_10 = substr(ds_nome_pac2, 5, 12)
   )
+
+# Regra 66 - stata inspirado no 59
+df_2 <- df_2 |>
+  vitallinkage::regras_linkage(
+    c('dt_nasc', 'cd_mun_not', 'sg_sexo', 'nome_menos_5d','ds_nome_pac2'),
+    c('ds_nome_mae1', 'ds_nome_mae2'),
+    66
+  )
+
+# Regra 67 - stata inspirado no 60
+df_2 <- df_2 |>
+  vitallinkage::regras_linkage(
+    c('mes_nasc', 'ano_nasc', 'cd_mun_not','sg_sexo', 'ds_nome_pac1_sound', 'ds_rua_res'),
+    c('ds_nome_mae2', 'ds_nome_mae1'),
+    67
+  )
+
+
+# Regra 68 - stata inspirado no 62
+df_2 <- df_2 |>
+  vitallinkage::regras_linkage(
+    c('ds_nome_pac', 'ds_nome_mae_sound', 'dt_obito'),
+    c('ds_nome_mae2', 'ds_nome_mae1'),
+    68
+  )
+
+
+# Regra 69 - stata inspirado no 63
+df_2 <- df_2 |>
+  vitallinkage::regras_linkage(
+    c('ds_nome_pac1','ds_nome_pac2','ds_nome_pac3','nome_meio_4_10', 'ds_nome_mae', 'dia_nasc', 'mes_nasc'),
+    c('ds_nome_mae'),
+    69
+  )
+
+
+# Regra 70 - stata inspirado no 64
+df_2 <- df_2 |>
+  vitallinkage::regras_linkage(
+    c('ds_nome_pac1','ds_nome_pac2','ds_nome_pac3','nome_meio_4_10', 'ds_nome_mae', 'dia_nasc', 'ano_nasc'),
+    c('ds_nome_mae'),
+    70
+  )
+
+# CHECK POINT 4
+#save(df_2, file = 'C:/vitalstrategies/data_sicence/TCC/script_linkage/dados/rn_linkada_70.RData')
+load('C:/vitalstrategies/data_sicence/TCC/script_linkage/dados/rn_linkada_70.RData')
+
+
+# # Regra 71 - stata inspirado no 65
+# df_t <- df_2 |>
+#   vitallinkage::regras_linkage(
+#     c('ds_nome_pac1', 'ds_nome_pac2', 'dia_nasc', 'mes_nasc', 'faixa_etaria', 'ds_nome_mae1', 'ignora_francisca_maria', 'ignora_maria'),
+#     c('ds_nome_mae2'),
+#     71
+#   )
+
+# Regra 71 - stata inspirado no 68
+df_2 <- df_2 |>
+  vitallinkage::regras_linkage(
+    c('ds_nome_pac2', 'ds_nome_pac2_sound', 'dt_nasc', 'nu_idade_anos', 'nome_meio_4_10', 'ignora_maria'),
+    c('ds_nome_mae1', 'nu_cns'),
+    71
+  )
+
+# Regra 72 - stata inspirado no 69
+df_2 <- df_2 |>
+  vitallinkage::regras_linkage(
+    c('ds_nome_pac3', 'ds_nome_mae_sound', 'dt_nasc', 'cd_mun_res', 'ds_nome_pac2_sound', 'nome_menos_2d'),
+    c('ds_nome_pac_sound'),
+    72
+  )
+
+# Regra 73 - stata inspirado no 71
+df_2 <- df_2 |>
+  vitallinkage::regras_linkage(
+    c('ds_nome_pac1', 'ds_nome_mae_sound', 'cd_cnes', 'cd_cep_res', 'cd_mun_res', 'dia_nasc', 'mes_nasc', 'ignora_maria'),
+    c('ds_nome_pac1'),
+    73
+  )
+
+
+# Regra 74 - stata inspirado no 72
+df_2 <- df_2 |>
+  vitallinkage::regras_linkage(
+    c('ds_nome_mae_sound', 'ds_nome_mae', 'ds_rua_res', 'sg_sexo', 'nu_idade_anos', 'ignora_maria' ),
+    c('ds_nome_pac'),
+    74
+  )
+
+
+# Regra 75 - stata inspirado no 73
+df_2 <- df_2 |>
+  vitallinkage::regras_linkage(
+    c('ds_nome_pac1', 'ds_nome_mae_sound', 'ds_nome_mae', 'cd_cnes', 'ignora_maria', 'ano_nasc'),
+    c('nome_5_12'),
+    75
+  )
+
+
+# Regra 76 - stata inspirado no 74
+df_2 <- df_2 |>
+  vitallinkage::regras_linkage(
+    c('nome_menos_5d', 'nome_meio_4_10', 'sg_sexo', 'ds_nome_mae', 'nu_idade_anos', 'cd_cnes'),
+    c('ds_nome_pac1'),
+    76
+  )
+
+#save(df_2, file = 'C:/vitalstrategies/data_sicence/TCC/script_linkage/dados/rn_linkada_76.RData')
+load('C:/vitalstrategies/data_sicence/TCC/script_linkage/dados/rn_linkada_76.RData')
+
+# Regra 77
+df_2 <- df_2 |>
+  vitallinkage::regras_linkage(
+    c('ds_nome_pac', 'ds_nome_mae', 'nu_cns', 'ignora_maria'),
+    c('nu_cns'),
+    77
+  )
+
+
+# Regra 78 - stata inspirado no 75
+df_2 <- df_2 |>
+  vitallinkage::regras_linkage(
+    c('nu_doc', 'ds_nome_pac2', 'ds_nome_pac3', 'ignora_maria', 'ano_nasc'),
+    c('nu_doc'),
+    78
+  )
+
+# Regra 79 - stata inspirado no 76
+df_2 <- df_2 |>
+  vitallinkage::regras_linkage(
+    c('nome_5_12', 'sg_sexo', 'ds_nome_mae_sound', 'faixa_etaria', 'cd_cep_res', 'dia_nasc', 'ignora_maria'),
+    c('ano_nasc'),
+    79
+  )
+
+# Regra 80 - stata inspirado no 77
+df_2 <- df_2 |>
+  vitallinkage::regras_linkage(
+    c('nome_5_12', 'sg_sexo', 'ds_nome_mae1', 'ds_nome_mae2_sound', 'dt_obito', 'dt_nasc'),
+    c('ds_nome_mae1','ds_nome_pac1'),
+    80
+  )
+
+# Regra 81 - stata inspirado no 78
+df_2 <- df_2 |>
+  vitallinkage::regras_linkage(
+    c('nome_5_12', 'dt_obito', 'nu_idade_anos', 'ds_nome_pac3', 'dia_nasc', 'mes_nasc'),
+    c('ds_nome_mae2'),
+    81
+  )
+
+# Regra 82 - stata inspirado no 87
+df_2 <- df_2 |>
+  vitallinkage::regras_linkage(
+    c('ds_nome_pac', 'ds_nome_pai', 'ds_nome_mae', 'dt_obito'),
+    c('ds_nome_pai', 'ds_nome_mae'),
+    82
+  )
+
+# Regra 83 - stata inspirado no 89
+df_2 <- df_2 |>
+  vitallinkage::regras_linkage(
+    c('ds_nome_pac', 'ds_nome_mae', 'ds_nome_mae_sound', 'dt_nasc'),
+    c('ds_nome_pac','ds_nome_mae', 'dt_obito', 'ds_nome_pai'),
+    83
+  )
+
+# save(df_2, file = 'C:/vitalstrategies/data_sicence/TCC/script_linkage/dados/rn_linkada_83.RData')
+
+load('C:/vitalstrategies/data_sicence/TCC/script_linkage/dados/rn_linkada_83.RData')
+
+df_2 <- df_2 |>
+  mutate(
+    ano_obito = year(dt_obito),
+    mes_obito = month(dt_obito),
+    dia_obito = day(dt_obito)
+  )
+
+# Regra 84 - stata inspirado no 90
+df_2 <- df_2 |>
+  vitallinkage::regras_linkage(
+    c('ds_nome_pac_sound', 'ds_nome_mae_sound', 'ds_nome_pai_sound', 'ano_obito', 'mes_obito'),
+    c('ds_nome_mae_sound', 'ds_nome_pai_sound', 'ano_obito'),
+    84
+  )
+
+# Regra 85 - stata inspirado no 91
+df_2 <- df_2 |>
+  vitallinkage::regras_linkage(
+    c('ds_nome_pac_sound', 'ds_nome_mae_sound', 'ds_nome_pai_sound', 'ano_obito', 'ano_nasc', 'mes_nasc'),
+    c('ds_nome_pac_sound', 'ds_nome_mae_sound', 'ds_nome_pai_sound', 'ano_obito'),
+    85
+  )
+
+# Regra 86 - stata inspirado no 92
+df_2 <- df_2 |>
+  vitallinkage::regras_linkage(
+    c('ds_nome_mae', 'dt_obito', 'ds_nome_pac_sound'),
+    c('ds_nome_mae', 'dt_obito', 'ds_nome_pac'),
+    86
+  )
+
+# Regra 87 - stata inspirado no 94
+df_2 <- df_2 |>
+  vitallinkage::regras_linkage(
+    c('ds_nome_pac_sound', 'ds_nome_pai_sound', 'dt_obito'),
+    c('ds_nome_pac_sound', 'ds_nome_pai_sound', 'dt_obito'),
+    87
+  )
+
+
+# Regra 88 - stata inspirado no 95
+df_2 <- df_2 |>
+  vitallinkage::regras_linkage(
+    c('ds_nome_pac_sound','ds_nome_pai_sound', 'faixa_etaria', 'ano_obito', 'mes_obito', 'ano_nasc'),
+    c('ds_nome_pac_sound', 'ds_nome_pai_sound', 'dt_obito'),
+    88
+  )
+
+
+# Regra 89 - stata inspirado no 96
+df_2 <- df_2 |>
+  vitallinkage::regras_linkage(
+    c('ds_nome_pac_sound', 'ds_nome_mae_sound', 'faixa_etaria', 'ds_bairro_res', 'ano_nasc', 'mes_nasc'),
+    c('ds_nome_pac_sound', 'ds_nome_mae_sound', 'faixa_etaria', 'ds_bairro_res'),
+    89
+  )
+
+#save(df_2, file = 'C:/vitalstrategies/data_sicence/TCC/script_linkage/dados/rn_linkada_89.RData')
+load('C:/vitalstrategies/data_sicence/TCC/script_linkage/dados/rn_linkada_89.RData')
+
+# Regra 90 - stata inspirado no 97 - pega irmãos
+df_2 <- df_2 |>
+  vitallinkage::regras_linkage(
+    c('ds_nome_mae_sound', 'ds_nome_pai_sound', 'dt_obito', 'dt_nasc'),
+    c('ds_nome_mae_sound', 'ds_nome_pai_sound', 'ano_nasc'),
+    90
+  )
+
+# Regra 91 - stata inspirado no 99
+df_2 <- df_2 |>
+  vitallinkage::regras_linkage(
+    c('ds_nome_pac_sound', 'ds_nome_mae_sound', 'dt_obito', 'ano_nasc'),
+    c('ds_nome_pac_sound', 'ds_nome_mae_sound', 'dt_obito', 'ano_nasc'),
+    91
+  )
+
+
+
+# Regra 92 - stata inspirado no 100
+df_2 <- df_2 |>
+  vitallinkage::regras_linkage(
+    c('ds_nome_pac_sound', 'ds_nome_mae_sound', 'dt_obito', 'ano_nasc'),
+    c('ds_nome_pac_sound', 'ds_nome_mae_sound', 'dt_obito', 'ano_nasc'),
+    92
+  )
+
+df_2 <- df_2 |>
+  mutate(mae1_menos3 = substr(ds_nome_mae, 1, nchar(ds_nome_mae) - 3))
+
+# Regra 93
+df_2 <- df_2 |>
+  vitallinkage::regras_linkage(
+    c('mae_menos5d', 'ds_nome_pac1', 'ds_nome_pac2_sound', 'dt_nasc', 'faixa_etaria', 'ds_bairro_res', 'mae1_menos3'),
+    c('mae_menos5d', 'ds_nome_pac1_sound'),
+    93
+  )
+
+# Regra 94
+df_2 <- df_2 |>
+  vitallinkage::regras_linkage(
+    c('mae_menos5d', 'ds_nome_pac1', 'ds_nome_pac2_sound', 'dt_nasc', 'faixa_etaria', 'ds_bairro_res', 'mae1_menos3'),
+    c('mae_menos5d', 'ds_nome_pac1_sound'),
+    94
+  )
+
+# Regra 95
+df_t <- df_2 |>
+  vitallinkage::regras_linkage(
+    c('mae_menos5d', 'ds_nome_pac1', 'ds_nome_pac2_sound', 'ano_nasc','mes_nasc', 'faixa_etaria', 'ds_bairro_res', 'mae1_menos3'),
+    c('ds_nome_pac_sound'),
+    95
+  )
+
+
+# save(df_2, file = 'C:/vitalstrategies/data_sicence/TCC/script_linkage/dados/rn_linkada_95.RData')
+load('C:/vitalstrategies/data_sicence/TCC/script_linkage/dados/rn_linkada_89.RData')
+
+
+tab_1(df_2, banco)
+
+
+############# CONDIÇÕES ESPECIAIS
+
+# 2º condição
+d2_t <- df_2 |>
+  mutate(mae1_menos3 = substr(ds_nome_mae, 1, nchar(ds_nome_mae) - 3)) |>
+  arrange(mae_menos5d, ds_nome_pac1, ds_nome_pac2_sound, ano_nasc, faixa_etaria, ds_bairro_res, mae1_menos3) |>
+  group_by(mae_menos5d, ds_nome_pac1, ds_nome_pac2_sound, ano_nasc, faixa_etaria, ds_bairro_res, mae1_menos3) |>
+  mutate(nu_cpf_lag = lag(nu_cpf),
+         N_par = ifelse((nu_cpf - nu_cpf_lag == 0 | is.na(nu_cpf_lag - nu_cpf) | nu_cpf == nu_cpf_lag) &
+                          gemelar != 1 & ds_nome_pac1 != "RN" & ds_nome_pac1 != "FM" & ds_bairro_res != "CENTRO", n(), NA)) |>
+  mutate(par_2 = ifelse(!is.na(N_par) & N_par > 1, cur_group_id(), NA)) |>
+  ungroup() |>
+  select(-nu_cpf_lag) |>
+  meio_de_campo()
+
+
+
+df_2$mae_men
+df_t$par_c90
+
+df_t$nome_meio
+gc()
 
 a <- a |> vitallinkage::start_linkage(c('ds_nome_pac_sound','ds_rua_res'), c('ds_nome_pac_sound', 'ds_nome_mae_sound'))
 
+bla <- df_2 |> select(par_1, ds_nome_pac, ds_nome_pac1, ds_nome_pac2,
+                      ds_nome_pac3, ds_nome_pac1_sound,
+                      ds_nome_pac2_sound, ds_nome_pac3_sound,
+                      dt_nasc, ds_nome_mae, ds_nome_mae1,
+                      ds_nome_mae2, ds_nome_mae3, ds_nome_pai,nu_tel)
 
+bla <- bla |>
+  vitallinkage::regras_linkage(
+    c('ds_nome_pac', 'dt_nasc'),
+    c('ds_nome_pac'),
+    111
+  )
+
+a <- bla |> select(par_1, par_c111,ds_nome_pac, ds_nome_mae, ds_nome_pai, dt_nasc, )
 df_2 <- df_t
 
 df_t$nome_menos_5d
@@ -675,6 +999,3 @@ a <- df_2 |> filter(ds_nome_pac == 'RN') |>
 
 b <- df_2 |> filter(par_1 %in% c(6859791)) |>
   select(par_1, ds_nome_pac, ds_nome_pac1, ds_nome_pac2, ds_nome_pac3, ds_nome_pac1_sound, ds_nome_pac2_sound, ds_nome_pac3_sound, dt_nasc, ds_nome_mae, ds_nome_mae1, ds_nome_mae2, ds_nome_mae3, nu_tel)
-
-
-source('http://cemin.wikidot.com/local--files/raisr')
